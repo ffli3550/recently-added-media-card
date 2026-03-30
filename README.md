@@ -269,7 +269,7 @@ The standalone cards will continue to work but won't receive new features.
 ---
 
 ## Credits
-
+- Built by Sam Russell - AI Used in development
 - YouTube embed fix based on the approach from [loryanstrant/ha-youtubevideocard](https://github.com/loryanstrant/ha-youtubevideocard) — YouTube IFrame API for Home Assistant
 - Trailer data from [The Movie Database (TMDB)](https://www.themoviedb.org/)
 - Built for the Home Assistant community
