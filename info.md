@@ -1,0 +1,1 @@
+A cinematic Home Assistant card that displays recently added movies and TV shows from Plex, Kodi, Jellyfin, or Emby. Features inline trailer playback, multiple themes, swipe navigation, and a full visual editor.
