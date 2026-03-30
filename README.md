@@ -3,7 +3,7 @@
 A cinematic Home Assistant card that displays recently added movies and TV shows from **Plex**, **Kodi**, **Jellyfin**, or **Emby** — all in one card.
 
 <p align="center">
-  <img src="screenshots/card-plex.jpg" alt="Recently Added Media Card — Plex" width="600">
+  <img src="screenshots/recently-added-card.gif" alt="Recently Added Media Card" width="600">
 </p>
 
 > **v2.0.0** — This card unifies and replaces the previous standalone cards ([plex-recently-added-card](https://github.com/rusty4444/plex-recently-added-card), [kodi-recently-added-card](https://github.com/rusty4444/kodi-recently-added-card), [jellyfin-recently-added-card](https://github.com/rusty4444/jellyfin-recently-added-card), [emby-recently-added-card](https://github.com/rusty4444/emby-recently-added-card)) into a single card with a server type selector, themed accents, inline trailer playback, and swipe navigation.
