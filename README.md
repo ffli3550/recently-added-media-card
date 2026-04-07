@@ -151,6 +151,7 @@ tmdb_api_key: YOUR_TMDB_READ_ACCESS_TOKEN
 | `title` | string | `"Recently Added"` | Header text (set to empty string to hide) |
 | `theme` | string | `"auto"` | Colour theme: `auto`, `plex`, `kodi`, `jellyfin`, `emby`, `dark`, `midnight`, `sunset`, `forest` |
 | `tmdb_api_key` | string | — | TMDB Read Access Token — enables the trailer button |
+| `trailer_mode` | string | `"inline"` | `inline` (plays on top of the card) or `popup` (fullscreen overlay) |
 | `fill_height` | boolean | `true` | When enabled, card stretches to fill its container. Disable if the card appears collapsed |
 | `card_height` | number | `300` | Card height in pixels (only used when `fill_height` is `false`) |
 

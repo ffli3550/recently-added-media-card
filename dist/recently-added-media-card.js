@@ -233,6 +233,14 @@ class RecentlyAddedMediaCardEditor extends HTMLElement {
           <input type="password" id="tmdb_api_key" value="${cfg.tmdb_api_key || ''}">
           <span class="helper">Optional — get a free Bearer token at themoviedb.org</span>
         </div>
+        <div class="field-row">
+          <label>Trailer Mode</label>
+          <select id="trailer_mode">
+            <option value="inline" ${(cfg.trailer_mode || 'inline') === 'inline' ? 'selected' : ''}>Inline (on card)</option>
+            <option value="popup" ${cfg.trailer_mode === 'popup' ? 'selected' : ''}>Popup (fullscreen)</option>
+          </select>
+          <span class="helper">Inline plays on top of the card. Popup opens a fullscreen overlay.</span>
+        </div>
       </div>
     `;
 
@@ -263,7 +271,7 @@ class RecentlyAddedMediaCardEditor extends HTMLElement {
       'jellyfin_url', 'jellyfin_api_key', 'jellyfin_user_id',
       'emby_url', 'emby_api_key', 'emby_user_id',
       'movies_count', 'shows_count', 'cycle_interval', 'title',
-      'theme', 'card_height', 'tmdb_api_key',
+      'theme', 'card_height', 'tmdb_api_key', 'trailer_mode',
     ];
 
     fields.forEach(id => {
@@ -1071,7 +1079,7 @@ class RecentlyAddedMediaCard extends HTMLElement {
       const showTrailerBtn = (url) => {
         if (url && this._items[this._currentIndex] === item) {
           trailerBtn.classList.add('visible');
-          trailerBtn.onclick = (e) => { e.stopPropagation(); this._playTrailerInline(url); };
+          trailerBtn.onclick = (e) => { e.stopPropagation(); this._config.trailer_mode === 'popup' ? this._playTrailerPopup(url) : this._playTrailerInline(url); };
         }
       };
 
@@ -1121,6 +1129,64 @@ class RecentlyAddedMediaCard extends HTMLElement {
     if (!url) return null;
     const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([-\w]{11})/);
     return match ? match[1] : null;
+  }
+
+  // ── Popup trailer playback ──────────────────────────────────────────────────
+
+  _playTrailerPopup(url) {
+    const ytId = this._getYouTubeId(url);
+    if (!ytId) return;
+
+    if (this._cycleTimer) { clearInterval(this._cycleTimer); this._cycleTimer = null; }
+    this._trailerActive = true;
+
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);z-index:99999;display:flex;align-items:center;justify-content:center;cursor:pointer;';
+
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'position:relative;width:90vw;max-width:960px;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;';
+
+    const playerDiv = document.createElement('div');
+    playerDiv.id = 'ram-yt-popup-' + Date.now();
+    playerDiv.style.cssText = 'width:100%;height:100%;';
+    wrapper.appendChild(playerDiv);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '\u2715';
+    closeBtn.style.cssText = 'position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:100001;';
+    wrapper.appendChild(closeBtn);
+
+    overlay.appendChild(wrapper);
+    document.body.appendChild(overlay);
+
+    const self = this;
+    const closeTrailer = () => {
+      self._trailerActive = false;
+      if (self._ytPlayer) { try { self._ytPlayer.destroy(); } catch (e) {} self._ytPlayer = null; }
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      self._startCycle();
+    };
+
+    closeBtn.onclick = (e) => { e.stopPropagation(); closeTrailer(); };
+    overlay.addEventListener('click', closeTrailer);
+    wrapper.addEventListener('click', (e) => e.stopPropagation());
+
+    const initPlayer = () => {
+      self._ytPlayer = new YT.Player(playerDiv.id, {
+        width: '100%', height: '100%', videoId: ytId,
+        playerVars: { autoplay: 1, controls: 1, modestbranding: 1, rel: 0, playsinline: 1, enablejsapi: 1, origin: window.location.origin },
+        events: { onStateChange: (event) => { if (event.data === 0) closeTrailer(); } },
+      });
+    };
+
+    if (window.YT && window.YT.Player) { initPlayer(); }
+    else {
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(tag);
+      }
+      const check = setInterval(() => { if (window.YT && window.YT.Player) { clearInterval(check); initPlayer(); } }, 100);
+      setTimeout(() => clearInterval(check), 10000);
+    }
   }
 
   // ── Inline trailer playback ───────────────────────────────────────────────────
