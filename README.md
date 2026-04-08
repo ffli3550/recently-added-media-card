@@ -1,5 +1,13 @@
 # Recently Added Media Card
 
+<p align="center">
+  <a href="https://buymeacoffee.com/rusty4" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="50">
+  </a>
+</p>
+
+
+
 A cinematic Home Assistant card that displays recently added movies and TV shows from **Plex**, **Kodi**, **Jellyfin**, or **Emby** — all in one card.
 
 <p align="center">
